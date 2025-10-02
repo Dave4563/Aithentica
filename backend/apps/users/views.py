@@ -3,12 +3,14 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import RegisterSerializer
+from .serializers import RegisterSerializer, LoginSerializer, UserDetailSerializer
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+from drf_spectacular.utils import extend_schema
+
 
 
 # Register
@@ -29,61 +31,45 @@ class RegisterView(CreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 # Login
+@extend_schema(request=LoginSerializer, responses=LoginSerializer)
 class LoginView(APIView):
     def post(self, request):
-        username = request.data.get("username")
-        password = request.data.get("password")
+        serializer = LoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        username = serializer.validated_data["username"]
+        password = serializer.validated_data["password"]
+
         user = authenticate(username=username, password=password)
         if user:
             refresh = RefreshToken.for_user(user)
             access_token = str(refresh.access_token)
 
-            # Set refresh token in HttpOnly cookie
             response = Response({
                 "access": access_token,
                 "user": {"username": user.username, "email": user.email}
             })
-            # Cookie settings
             response.set_cookie(
                 key='refreshToken',
                 value=str(refresh),
-                httponly=True,           # Not accessible by JS
-                secure=True,             # Only sent over HTTPS, to be changed
-                samesite='None',       # Protect against CSRF
-                max_age=7*24*60*60,      # 7 days in seconds
-                path='/'  # Only sent to refresh endpoint
+                httponly=True,
+                secure=True,
+                samesite='None',
+                max_age=7*24*60*60,
+                path='/'
             )
             return response
 
         return Response({"error": "Invalid credentials"}, status=401)
 
+
+@extend_schema(responses=UserDetailSerializer)
 class UserDetailView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        user = request.user
-        
-        # Safely get token usage (might not exist yet)
-        token_usage = getattr(user, "token_usage", None)
-        if token_usage:
-            usage_data = {
-                "prompt_tokens": token_usage.prompt_tokens,
-                "completion_tokens": token_usage.completion_tokens,
-                "total_tokens": token_usage.total_tokens,
-            }
-        else:
-            usage_data = {
-                "prompt_tokens": 0,
-                "completion_tokens": 0,
-                "total_tokens": 0,
-            }
-
-        return Response({
-            "username": user.username,
-            "email": user.email,
-            "token_usage": usage_data,
-        })
-
+        serializer = UserDetailSerializer(request.user)
+        return Response(serializer.data)
 
 
 class CookieTokenRefreshView(TokenRefreshView):

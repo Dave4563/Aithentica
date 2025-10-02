@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
+from drf_spectacular.utils import extend_schema_field
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -39,3 +40,30 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(validated_data["password"])
         user.save()
         return user
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
+
+
+class UserDetailSerializer(serializers.ModelSerializer):
+    token_usage = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ["username", "email", "token_usage"]
+
+    @extend_schema_field(serializers.DictField(child=serializers.IntegerField()))
+    def get_token_usage(self, obj):
+        token_usage = getattr(obj, "token_usage", None)
+        if token_usage:
+            return {
+                "prompt_tokens": token_usage.prompt_tokens,
+                "completion_tokens": token_usage.completion_tokens,
+                "total_tokens": token_usage.total_tokens,
+            }
+        return {
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "total_tokens": 0,
+        }

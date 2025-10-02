@@ -1,10 +1,9 @@
 from django.urls import path
-from .views import chat_view, pollinations_vision_view, pollinations_text_view, chat_history_view
+from .views import ChatView, PollinationsVisionView, PollinationsTextView, ChatHistoryView
 
 urlpatterns = [
-    path("chat/", chat_view, name="llm-request"),
-    path("chat_pollinations/", pollinations_text_view, name="llm-pollinations-request"),
-    path("vision/", pollinations_vision_view, name="vision-request"),
-    path("chat_history/", chat_history_view, name="chat-history-view")
+    path('chat/', ChatView.as_view(), name='chat'),
+    path('chat_pollinations/', PollinationsTextView.as_view(), name='pollinations_text'),
+    path('vision/', PollinationsVisionView.as_view(), name='pollinations_vision'),
+    path('chat_history/', ChatHistoryView.as_view(), name='chat_history'),
 ]
-
