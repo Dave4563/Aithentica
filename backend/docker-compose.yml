@@ -16,7 +16,7 @@ services:
     build: .
     command: >
       sh -c "python manage.py migrate --noinput &&
-             uvicorn storefront.asgi:application --host 0.0.0.0 --port 8000"
+            uvicorn storefront.asgi:application --host 0.0.0.0 --port 8000"
     volumes:
       - .:/app
     ports:
@@ -30,10 +30,13 @@ services:
       - backend
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/api/v1/docs/swagger/ || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
+    labels:
+      - com.example.wpcompose.autoheal=true
+
   db:
     image: postgres:15
     volumes:
@@ -49,6 +52,40 @@ services:
       test: ["CMD-SHELL", "pg_isready -U myuser -d mydb"]
       interval: 5s
       retries: 5
+    labels:
+      - com.example.wpcompose.autoheal=true
+
+  nginx:
+    image: nginx:stable
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+    depends_on:
+      web:
+        condition: service_healthy
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "nginx -t || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    labels:
+      - com.example.wpcompose.autoheal=true
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt/:rw
+      - ./certbot/www:/var/www/certbot/:rw
+    depends_on:
+      nginx:
+        condition: service_healthy
 
   autoheal:
     image: willfarrell/autoheal
